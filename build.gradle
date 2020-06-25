@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+    }
+    dependencies {
+        //这里引入了spring-boot的版本管理，所以后面引入的spring-boot可以不用写版本
+        //classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+apply plugin: 'java'
+//1.5.3的时候使用下面这个
+//apply plugin: 'spring-boot'
+
+//2.0.3的时候使用下面这三个
+//apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.drama'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+
+repositories {
+    maven {
+        url 'http://maven.aliyun.com/nexus/content/groups/public/'
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
