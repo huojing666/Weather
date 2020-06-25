@@ -30,7 +30,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
     /**
      * redis过期时间
      * */
-    private static final long TiME_OUT = 10L;
+    private static final long TIME_OUT = 10L;
 
     /* http 响应成功状态码*/
     private static final  int OK_REQUEST = 200;
@@ -76,6 +76,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         /**
          * 先从缓存中获取数据
          * */
+
         /*判断缓存中是否有数据 */
         if (stringRedisTemplate.hasKey(key)){
             /* 从缓存中获取数据*/
@@ -91,7 +92,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
             }
             /* 将读取到的数据写入缓存 并设置在缓存中的过期时间*/
             logger.info("数据写入缓存");
-            ops.set(key,body,TiME_OUT, TimeUnit.SECONDS);
+            ops.set(key,body,TIME_OUT, TimeUnit.SECONDS);
         }
 
 
