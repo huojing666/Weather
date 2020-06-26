@@ -30,9 +30,11 @@ public class WeatherDataServiceImpl implements WeatherDataService {
     /**
      * redis过期时间
      * */
-    private static final long TIME_OUT = 10L;
+    private static final long TIME_OUT = 1800L;
 
-    /* http 响应成功状态码*/
+    /**
+     * http 响应成功状态码
+     * */
     private static final  int OK_REQUEST = 200;
     @Autowired
     RestTemplate restTemplate;
@@ -46,19 +48,56 @@ public class WeatherDataServiceImpl implements WeatherDataService {
 
 
     @Override
-    public WeatherResponse getDataByCityID(String cityId) {
+    public WeatherResponse GetDataByCityId(String cityId) {
         String uri = WEATHER_URI +"citykey=" +cityId;
         System.out.println("getbyId:::"+uri);
         return this.doGetWeather(uri);
     }
 
     @Override
-    public WeatherResponse getDataBycityName(String cityName) {
+    public WeatherResponse GetDataByCityName(String cityName) {
         String uri = WEATHER_URI +"city=" +cityName;
         return this.doGetWeather(uri);
     }
 
+    @Override
+    public void syncDateByCityId(String cityId) {
+        String uri =  WEATHER_URI + "citykey=" + cityId;
+        this.saveWeatherInfo(uri);
+    }
 
+    /**
+     *将天气数据写入缓存
+     * */
+    private void saveWeatherInfo(String uri){
+        /*定义key为uri*/
+        String key = uri;
+        /* 响应body*/
+        String body = null;
+
+        ObjectMapper mapper = new ObjectMapper();
+        /* 返回解析后的对象*/
+        WeatherResponse weatherResponse = null;
+        /**
+         * 定义对redis操作的对象
+         * */
+        ValueOperations<String,String> ops = stringRedisTemplate.opsForValue();
+
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri,String.class);
+
+        /* 判断响应码是否为200 */
+        if (responseEntity.getStatusCodeValue() == OK_REQUEST){
+            body = responseEntity.getBody();
+        }
+        /* 将读取到的数据写入缓存 并设置在缓存中的过期时间*/
+        logger.info("数据写入缓存");
+        ops.set(key,body,TIME_OUT, TimeUnit.SECONDS);
+
+    }
+
+    /**
+     * redis获取天气数据
+     * */
     private WeatherResponse doGetWeather(String uri) {
 
         /*定义key为uri*/

@@ -14,13 +14,13 @@ public class WeatherController {
 
     @RequestMapping(path = {"/bycityId/"} ,method = {RequestMethod.GET})
     public WeatherResponse getWeatherByCityId(@RequestParam("cityId") String cityId) {
-        return weatherDataService.getDataByCityID(cityId);
+        return weatherDataService.GetDataByCityId(cityId);
     }
 
 
     @RequestMapping(path = {"/bycityName/"} ,method = {RequestMethod.GET})
     public WeatherResponse getWeatherByCityName(@RequestParam("cityName") String cityName) {
-        return weatherDataService.getDataBycityName(cityName);
+        return weatherDataService.GetDataByCityName(cityName);
     }
 }
 
