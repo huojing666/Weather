@@ -15,7 +15,7 @@ public class QuartzConfiguration {
     /**
      * 定义更新频率
      * */
-    private static final int TIME = 10;
+    private static final int TIME = 1800;
 
     /**
      * JobDetail
