@@ -9,10 +9,20 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
 	integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
 	crossorigin="anonymous">
-
 <title>何静爸爸的天气预报</title>
+	<style>
+		#bgImg {
+			height: 100%;
+			width: 100%;
+			background: url('../../static/img/3.jpeg') no-repeat;
+			background-size: cover;
+			position: absolute;
+			overflow: hidden;
+		}
+
+	</style>
 </head>
-<body>
+<body  id="bgImg">
 	<div class="container">
 		<div class="row">
 			<h3 th:text="${reportModel.title}">waylau</h3>
@@ -72,6 +82,11 @@
 
 	<script type="text/javascript" th:src="@{/js/weather/report.js?v=1.0}"></script>
 
+	<!-- 豆芽666 -->
+	<script type="text/javascript">
+        WIDGET = {FID: '1gTjTNPhiv'}
+	</script>
+	<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"></script>
 
 </body>
 </html>

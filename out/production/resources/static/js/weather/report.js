@@ -1,4 +1,5 @@
 
+//下拉事件
 $(function(){
     $("#selectCityId").change(function(){
         var cityId = $("#selectCityId").val();
